@@ -1,2 +1,2 @@
-# CASAT_Challenge
-This repository is created for the CASAT challenge.
+# CPSAT_Challenge
+This repository is created for the CPSAT challenge.
