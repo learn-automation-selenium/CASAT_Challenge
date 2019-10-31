@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cpsat.challenge</groupId>
-	<artifactId>CASAT_Challenge</artifactId>
+	<artifactId>CPSAT_Challenge</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -22,6 +22,8 @@
 		<extentreport.version>2.41.2</extentreport.version>
 		<assertj-core.version>3.13.2</assertj-core.version>
 		<hamcrest-all.version>1.3</hamcrest-all.version>
+		<apache-poi.version>3.17</apache-poi.version>
+		<apache-commons.version>1.3.2</apache-commons.version>
 	</properties>
 
 	<build>
@@ -81,6 +83,21 @@
 			<artifactId>hamcrest-all</artifactId>
 			<version>${hamcrest-all.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${apache-poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${apache-poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${apache-commons.version}</version>
 		</dependency>
 	</dependencies>
 </project>

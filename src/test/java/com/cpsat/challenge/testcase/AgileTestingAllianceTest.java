@@ -18,7 +18,7 @@ import configreader.ObjectRepository;
 import configreader.PropertyFileReader;
 import utility.MyRunnable;
 
-public class AgileTestingAlliance extends TC_Common{
+public class AgileTestingAllianceTest extends TC_Common{
 
 	ExecutorService executor;
 	

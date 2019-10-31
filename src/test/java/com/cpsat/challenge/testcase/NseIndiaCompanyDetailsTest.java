@@ -13,7 +13,7 @@ import com.cpsat.challenge.testcase.common.TC_Common;
 import configreader.ObjectRepository;
 import configreader.PropertyFileReader;
 
-public class NseIndia extends TC_Common{
+public class NseIndiaCompanyDetailsTest extends TC_Common{
 
 	@BeforeClass
 	public static void setData() {
@@ -23,7 +23,7 @@ public class NseIndia extends TC_Common{
 	}
 	
 	@Test
-	public void test001() {
+	public void minNumbetTest() {
 		Map<String, Integer> marketDetails = new NSEIndexPage(driver).getMarketWatchDetails();
 		
 		Entry<String, Integer> min = null;
@@ -33,6 +33,7 @@ public class NseIndia extends TC_Common{
 		    }
 		}
 
+		// print the minimum number
 		System.out.println(min.getKey() + " " + min.getValue());
 	}
 }

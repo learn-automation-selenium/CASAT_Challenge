@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -145,6 +146,23 @@ public class GenericHandlers {
 		log.info("The data: "+data+" entered successfully in field");
 	}
 
+	/**
+	 * This method will perform key operation on a webElement
+	 * @param element
+	 * @param enter
+	 */
+	public void performKeyOperation(WebElement element, Keys enter) {
+		try {
+			element.sendKeys(enter);	
+		} catch (NoSuchElementException e) {
+			log.error("The operation: "+enter+" could not be performed on the " + element);
+			log.error(e.getStackTrace());
+		} catch (Exception e) {
+			log.error("Unknown exception occured while performing "+enter+" in the " + element);
+			log.error(e.getStackTrace());
+		}
+		log.info("The "+enter+" operation is performed successfully on " +element);
+	}
 
 	/**
 	 * This method will enter the value to the text area
@@ -242,12 +260,12 @@ public class GenericHandlers {
 	 * This method will return the text of the element using xpath as locator
 	 * @param xpathVal  The xpath (locator) of the element
 	 */
-	public String getTextByXpath(WebElement element){
+	public String getElementText(WebElement element){
 		String bReturn = "";
 		try{
 			return element.getText();
 		} catch (Exception e) {
-			log.error("The element with xpath: "+element+" could not be found.");
+			log.error("The element : "+element+" could not be found.");
 			log.error(e.getStackTrace());
 		}
 		return bReturn; 
