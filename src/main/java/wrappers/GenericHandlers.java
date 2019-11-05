@@ -174,7 +174,7 @@ public class GenericHandlers {
 			log.error("Unknown exception occured while performing "+enter+" in the " + element);
 			log.error(e.getStackTrace());
 		}
-		log.info("The "+enter+" operation is performed successfully on " +element);
+		log.info("Key operation is performed successfully on " +element);
 	}
 
 	/**
