@@ -1,4 +1,4 @@
- package excelreader;
+ package excel;
 
 import java.io.InputStream;
 
@@ -10,7 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import utility.ResourceHandler;
 
-public class DataInputProvider{
+public class ExcelReader{
 
 	public static Object[][] getAllSheetData(String dataFileName, String sheetName) {
 

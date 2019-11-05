@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +28,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -41,7 +45,7 @@ public class GenericHandlers {
 
 	private static final Logger log = LoggerHandler.getLogger(GenericHandlers.class);
 
-	public static WebDriver driver;
+	public WebDriver driver;
 	protected static Properties prop;
 	public String sUrl,sHubUrl,sHubPort;
 	public static String url;
@@ -92,7 +96,7 @@ public class GenericHandlers {
 
 			// this is for grid run
 			if(bRemote)
-				this.driver = new RemoteWebDriver(new URL("http://"+sHubUrl+":"+sHubPort+"/wd/hub"), dc);
+				driver = new RemoteWebDriver(new URL("http://"+sHubUrl+":"+sHubPort+"/wd/hub"), dc);
 			else{ // this is for local run
 				switch (browser) {
 				case Chrome:
@@ -101,7 +105,13 @@ public class GenericHandlers {
 					} else if (osName.contains("Mac")) {
 						System.setProperty("webdriver.chrome.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\chromedriver"));
 					}
-					driver = new ChromeDriver();
+					
+					List<String> chromeArgsList = new ArrayList<>();
+					chromeArgsList.add("--disable-notifications");
+					
+					ChromeOptions chromeOptions = new ChromeOptions();
+					chromeOptions.addArguments(chromeArgsList);
+					driver = new ChromeDriver(chromeOptions);
 					break;
 				case Firefox:
 					if (osName.contains("Window")) {
@@ -109,7 +119,10 @@ public class GenericHandlers {
 					} else if (osName.contains("Mac")) {
 						System.setProperty("webdriver.gecko.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\geckodriver"));
 					}
-					driver = new FirefoxDriver();
+					
+					FirefoxOptions firefoxOptions = new FirefoxOptions();
+					firefoxOptions.addPreference("dom.webnotifications.enabled", false);
+					driver = new FirefoxDriver(firefoxOptions);
 					break;
 				case Iexplorer:
 					break;
@@ -258,7 +271,7 @@ public class GenericHandlers {
 
 	/**
 	 * This method will return the text of the element using xpath as locator
-	 * @param xpathVal  The xpath (locator) of the element
+	 * @param element - Webelement locator
 	 */
 	public String getElementText(WebElement element){
 		String bReturn = "";
@@ -270,7 +283,20 @@ public class GenericHandlers {
 		}
 		return bReturn; 
 	}
-
+	
+	/**
+	 * This method will return current page title
+	 *  
+	 **/
+	public String getCurrentPageTitle() {
+		String pageTitle = "";
+		try {
+			return driver.getTitle();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return pageTitle;
+	}
 	/**
 	 * This method will take snapshot of the browser
 	 */

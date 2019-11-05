@@ -25,8 +25,8 @@ public class WaitHandler {
 		driver.manage().timeouts().implicitlyWait(timeout, unit == null ? TimeUnit.SECONDS : unit);
 	}
 
-	public void waitForElementToBeClickable(long time, WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+	public void waitForElementToBeClickable(WebElement element, long timeOut) {
+		WebDriverWait wait = new WebDriverWait(driver, timeOut);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		log.info("Webelement " +element+" found and can be clicked");
 	}

@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 
 import browser.BrowserType;
-import excelreader.DataInputProvider;
+import excel.ExcelReader;
 import wrappers.GenericHandlers;
 
 public class TC_Common extends GenericHandlers {
@@ -44,6 +44,6 @@ public class TC_Common extends GenericHandlers {
 	
 	@DataProvider(name="fetchCompanyName")
 	public Object[][] getData(){
-		return DataInputProvider.getAllSheetData(dataFileName, dataSheetName);		
+		return ExcelReader.getAllSheetData(dataFileName, dataSheetName);		
 	}
 }
