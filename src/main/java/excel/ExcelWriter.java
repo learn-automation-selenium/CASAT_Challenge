@@ -13,6 +13,13 @@ import utility.ResourceHandler;
 
 public class ExcelWriter {
 
+	/**
+	 * This method writes data to an excel sheet
+	 * 
+	 * @param fileName - name of file
+	 * @param sheetName - name of the sheet where data will be stored
+	 * @param data - 2D array which will be written over the excel
+	 * */
 	public static void exportDataToExcel(String fileName, String sheetName, String[][] data) {
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();

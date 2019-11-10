@@ -7,11 +7,8 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +16,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -33,7 +31,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import browser.BrowserType;
 import configreader.ObjectRepository;
@@ -94,50 +91,43 @@ public class GenericHandlers {
 				dc.setPlatform(Platform.MAC);
 			}
 
-			// this is for grid run
-			if(bRemote)
-				driver = new RemoteWebDriver(new URL("http://"+sHubUrl+":"+sHubPort+"/wd/hub"), dc);
-			else{ // this is for local run
-				switch (browser) {
-				case Chrome:
-					if (osName.contains("Window")) {
-						System.setProperty("webdriver.chrome.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\chromedriver.exe"));
-					} else if (osName.contains("Mac")) {
-						System.setProperty("webdriver.chrome.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\chromedriver"));
-					}
-					
-					List<String> chromeArgsList = new ArrayList<>();
-					chromeArgsList.add("--disable-notifications");
-					
-					ChromeOptions chromeOptions = new ChromeOptions();
-					chromeOptions.addArguments(chromeArgsList);
-					driver = new ChromeDriver(chromeOptions);
-					break;
-				case Firefox:
-					if (osName.contains("Window")) {
-						System.setProperty("webdriver.gecko.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\geckodriver.exe"));
-					} else if (osName.contains("Mac")) {
-						System.setProperty("webdriver.gecko.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\geckodriver"));
-					}
-					
-					FirefoxOptions firefoxOptions = new FirefoxOptions();
-					firefoxOptions.addPreference("dom.webnotifications.enabled", false);
-					driver = new FirefoxDriver(firefoxOptions);
-					break;
-				case Iexplorer:
-					break;
-				default:
-					throw new RuntimeException("Provided browser name is not correct");
+			switch (browser) {
+			case Chrome:
+				if (osName.contains("Window")) {
+					System.setProperty("webdriver.chrome.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\chromedriver.exe"));
+				} else if (osName.contains("Mac")) {
+					System.setProperty("webdriver.chrome.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\chromedriver"));
 				}
+				
+				List<String> chromeArgsList = new ArrayList<>();
+				chromeArgsList.add("--disable-notifications");
+				
+				ChromeOptions chromeOptions = new ChromeOptions();
+				chromeOptions.addArguments(chromeArgsList);
+				driver = new ChromeDriver(chromeOptions);
+				break;
+			case Firefox:
+				if (osName.contains("Window")) {
+					System.setProperty("webdriver.gecko.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\geckodriver.exe"));
+				} else if (osName.contains("Mac")) {
+					System.setProperty("webdriver.gecko.driver", ResourceHandler.getResourcePath("\\resources\\drivers\\geckodriver"));
+				}
+				
+				FirefoxOptions firefoxOptions = new FirefoxOptions();
+				firefoxOptions.addPreference("dom.webnotifications.enabled", false);
+				driver = new FirefoxDriver(firefoxOptions);
+				break;
+			default:
+				throw new RuntimeException("Given browser name is not correct");
 			}
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(ObjectRepository.reader.getImplicitWait(), TimeUnit.SECONDS);
 			driver.get(url);
+			log.info("The browser:" +browser+ " launched successfully");
 		} catch (Exception e) {
-			log.error("The browser:" + browser + " could not be launched");
+			log.error("The browser:" +browser+ " could not be launched");
 			log.error(e.getStackTrace());
 		}
-		log.info("The browser:" + browser + " launched successfully");
 	}
 
 	/**
@@ -148,15 +138,15 @@ public class GenericHandlers {
 	public void enterData(WebElement element, String data) {
 		try {
 			element.clear();
-			element.sendKeys(data);	
+			element.sendKeys(data);
+			log.info("The data: " +data+ " entered successfully in field");
 		} catch (NoSuchElementException e) {
-			log.error("The data: "+data+" could not be entered in the field");
+			log.error("The data: " +data+ " could not be entered in the field");
 			log.error(e.getStackTrace());
 		} catch (Exception e) {
-			log.error("Unknown exception occured while entering "+data+" in the field");
+			log.error("An unknown exception occured while entering " +data+ " in the field");
 			log.error(e.getStackTrace());
 		}
-		log.info("The data: "+data+" entered successfully in field");
 	}
 
 	/**
@@ -166,15 +156,15 @@ public class GenericHandlers {
 	 */
 	public void performKeyOperation(WebElement element, Keys enter) {
 		try {
-			element.sendKeys(enter);	
+			element.sendKeys(enter);
+			log.info("Key operation is performed successfully on the " +element);
 		} catch (NoSuchElementException e) {
-			log.error("The operation: "+enter+" could not be performed on the " + element);
+			log.error("The operation: " +enter+ " could not be performed on the " +element);
 			log.error(e.getStackTrace());
 		} catch (Exception e) {
-			log.error("Unknown exception occured while performing "+enter+" in the " + element);
+			log.error("An unknown exception occured while performing " +enter+ " on the " +element);
 			log.error(e.getStackTrace());
 		}
-		log.info("Key operation is performed successfully on " +element);
 	}
 
 	/**
@@ -184,15 +174,15 @@ public class GenericHandlers {
 	 */
 	public void enterTextAreaData(WebElement element, String data) {
 		try {
-			element.sendKeys(data);	
+			element.sendKeys(data);
+			log.info("The data: " +data+ " entered successfully in field");
 		} catch (NoSuchElementException e) {
-			log.error("The data: "+data+" could not be entered in the field");
+			log.error("The data: " +data+ " could not be entered in the field");
 			log.error(e.getStackTrace());
 		} catch (Exception e) {
-			log.error("Unknown exception occured while entering "+data+" in the field");
+			log.error("An unknown exception occured while entering " +data+ " in the field");
 			log.error(e.getStackTrace());
 		}
-		log.info("The data: "+data+" entered successfully in field");
 	}
 
 	/**
@@ -218,28 +208,28 @@ public class GenericHandlers {
 				driver.close();
 			}
 		} catch (Exception e) {
-			log.error("The browser could not be closed.");
+			log.error("The current browser window could not be closed.");
 			log.error(e.getStackTrace());
 		}
 	}
 
 	/**
 	 * This method clicks the WebElement
-	 * @param element
+	 * @param element of WebElement type
 	 */
 	public void clickElement(WebElement element) {
 		try{
-			log.info("The element : "+element+" is clicked.");
 			element.click();
+			log.info("The element : " +element+ " is clicked.");
 		} catch (Exception e) {
-			log.error("The element : "+element+" could not be clicked.");
+			log.error("The element : " +element+ " could not be clicked.");
 			log.error(e.getStackTrace());
 		}
 	}
 
 	/**
 	 * This method will check if the radio button is not selected, then select the radio button
-	 * @param radioElement
+	 * @param radioElement of WebElement type
 	 */
 	public void selectElement(WebElement radioElement) {
 		boolean isSelected = false;
@@ -248,40 +238,56 @@ public class GenericHandlers {
 			if (!isSelected) {
 				radioElement.click();
 			}
+			log.info("The element : " +radioElement+ " is selected.");
 		} catch (Exception e) {
-			log.error("The element : "+radioElement+" could not be selected.");
+			log.error("The element : " +radioElement+ " could not be selected.");
 			log.error(e.getStackTrace());
 		}
-		log.info("The element : "+radioElement+" is selected.");
 	}
 
 	/**
-	 * This method will mouse over on the element using xpath as locator
-	 * @param xpathVal  The xpath (locator) of the element to be moused over
+	 * This method will perform mouse hover action over the element
+	 * @param element of WebElement type
 	 */
 	public void mouseOver(WebElement element) {
 		try{
 			new Actions(driver).moveToElement(element).build().perform();
+			log.info("The mouse hover action over the element: " +element+ " is performed.");
 		} catch (Exception e) {
-			log.error("The mouse over by xpath : "+element+" could not be performed.");
+			log.error("The mouse hover action over the element: " +element+ " could not be performed.");
 			log.error(e.getStackTrace());
 		}
-		log.info("The mouse over by xpath : "+element+" is performed.");
+	}
+	
+	/**
+	 * This method will perform mouse hover action over the element using java script Executor.
+	 * @param element of WebElement type
+	 */
+	public void mouseOverJavaScriptExecutor(WebElement element) {
+		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover',true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+		try{
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript(mouseOverScript, element);
+			log.info("The mouse hover action over the element: " +element+ " is performed.");
+		} catch (Exception e) {
+			log.error("The mouse hover action over the element: " +element+ " could not be performed.");
+			log.error(e.getStackTrace());
+		}
 	}
 
 	/**
-	 * This method will return the text of the element using xpath as locator
+	 * This method will return the text of the element
 	 * @param element - Webelement locator
 	 */
 	public String getElementText(WebElement element){
-		String bReturn = "";
+		String text = "";
 		try{
 			return element.getText();
 		} catch (Exception e) {
-			log.error("The element : "+element+" could not be found.");
+			log.error("The element : " +element+ " could not be found.");
 			log.error(e.getStackTrace());
 		}
-		return bReturn; 
+		return text; 
 	}
 	
 	/**
@@ -297,8 +303,13 @@ public class GenericHandlers {
 		}
 		return pageTitle;
 	}
+	
 	/**
-	 * This method will take snapshot of the browser
+	 * This method will take snapshot of the browser and 
+	 * assign a unique number to the image and stores it to a location
+	 * 
+	 * @param name- name to be assigned the image
+	 * @return screenShotPath - path where the image is stored
 	 */
 	public String takeSnap(String name){
 		long number = UtilityClass.getRandomNumber();
@@ -315,30 +326,6 @@ public class GenericHandlers {
 		} catch (WebDriverException e) {
 			log.error(e.getStackTrace());
 		} catch (IOException e) {
-			log.error(e.getStackTrace());
-		}
-		return screenShotPath;
-	}
-
-	/**
-	 * This method will take snapshot of full screen using Robot class
-	 */
-	public String takeFullSnap(String name) {
-		long number = UtilityClass.getRandomNumber();
-		String destinationPath= "";
-		String screenShotPath = "";
-		try {
-			Robot robot = new Robot();
-			String format = "jpg";
-			destinationPath = ResourceHandler.getResourcePath("\\\\target\\\\screenshot"); 
-			File destFile = new File(destinationPath+"\\" +number+ "_"+name+ "." + format);
-			Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-			BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
-			ImageIO.write(screenFullImage, format, destFile);
-			screenShotPath = destFile.getAbsolutePath(); 
-		} catch (AWTException | IOException ex) {
-			log.error(ex.getStackTrace());
-		} catch (Exception e) {
 			log.error(e.getStackTrace());
 		}
 		return screenShotPath;

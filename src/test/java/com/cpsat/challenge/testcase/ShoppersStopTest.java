@@ -30,16 +30,17 @@ public class ShoppersStopTest extends TC_Common {
 	@Test
 	public void bannerTest001() {
 		List<String> cityList = new ArrayList<String>(Arrays.asList("Agra","Bhopal","Mysore"));
+		
 		HomePage homePage = new HomePage(driver);
 		
 		// Click on the banner slider > for the number of times till the banner gets repeated
+		homePage.viewAllBanners();
 		
 		// Print all the accessories name under MEN section > Men’s Fragrance
-		// TODO: fetching of all the fragrance list is pending now
-		/*List<String> menFragranceLst = homePage.mouseHoverOverMenSection().mouseHoverOverMensFragrance().getAllMensFragrance();
+		List<String> menFragranceLst = homePage.mouseHoverOverMenSection().mouseHoverOverMensFragrance().getAllMensFragrance();
 		menFragranceLst.forEach(fragrance -> {
 			System.out.println(fragrance);
-		});*/
+		});
 		
 		// click on All store link, and Print the Cities name that available in Find Stores in your city
 		List<String> storeList = homePage.clickOnStoreFinder().selectCityName(STORE_CITY).getAllStoreInYourCity();
@@ -47,7 +48,7 @@ public class ShoppersStopTest extends TC_Common {
 		// Assert Agra, Bhopal and Mysore are available in Find Stores in your city.
 		for (int i = 0; i < storeList.size(); i++) {
 			if(cityList.contains(storeList.get(i))) {
-				Assert.assertTrue(true, storeList.get(i)+" is available in the list");
+				Assert.assertTrue(true, storeList.get(i)+ " is available in the list");
 			}
 		}
 		

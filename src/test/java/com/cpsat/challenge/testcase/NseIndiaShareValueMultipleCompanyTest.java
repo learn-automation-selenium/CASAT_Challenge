@@ -24,7 +24,7 @@ public class NseIndiaShareValueMultipleCompanyTest extends TC_Common{
 	}
 	
 	@Test(dataProvider="fetchCompanyName")
-	public void minNumbetTest(String companyName) {
+	public void companyDetailsTest(String companyName) {
 		
 		// verify company name
 		CompanyDetailsPage companyDetails = new NSEIndexPage(driver).searchCompanyDetails(companyName);
@@ -35,15 +35,15 @@ public class NseIndiaShareValueMultipleCompanyTest extends TC_Common{
 		// fetch the following and print in the console
 		//1. Face Value
 		String faceValue = companyDetails.getFaceValue();
-		System.out.println("Face Value " +faceValue);
+		System.out.println("Face value " +faceValue);
 		
 		//2. 52 week high
 		String high52WeekValue = companyDetails.get52WeekHigh();
-		System.out.println("52 week high " +high52WeekValue);
+		System.out.println("52 weeks high " +high52WeekValue);
 		
 		//3. 52 week low
 		String low52WeekValue = companyDetails.get52WeekLow();
-		System.out.println("52 week " +low52WeekValue);
+		System.out.println("52 weeks low " +low52WeekValue);
 		
 		//take screenshot
 		takeSnap(companyName);

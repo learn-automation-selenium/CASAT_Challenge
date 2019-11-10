@@ -7,10 +7,9 @@ public class MyRunnable implements Runnable{
 	public MyRunnable(String url) {
 		this.url = url;
 	}
+	
 	@Override
 	public void run() {
 		UtilityClass.getStatusCode(url);
-		
 	}
-
 }

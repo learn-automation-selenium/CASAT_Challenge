@@ -8,9 +8,9 @@ import java.util.concurrent.Executors;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.cpsat.challenge.pages.agiletestingalliance.CertificationsPage;
 import com.cpsat.challenge.pages.agiletestingalliance.IndexPage;
 import com.cpsat.challenge.testcase.common.TC_Common;
 
@@ -30,12 +30,14 @@ public class AgileTestingAllianceTest extends TC_Common{
 	}
 	
 	@Test
-	public void test001() {
+	public void certificationsDetailsTest() {
 		
 		int MYTHREADS = 10;
 		executor = Executors.newFixedThreadPool(MYTHREADS);
+		
 		//Click on the certification’s menu item
-		List<WebElement> certificationsList = new IndexPage(driver).clickCertificationsLink().getCertificationsCount();
+		CertificationsPage certificationPage = new IndexPage(driver).clickCertificationsLink();
+		List<WebElement> certificationsList = certificationPage.getCertificationsCount();
 		List<WebElement> CP_CCT = new ArrayList<WebElement>();
 		
 		// verify that the count is 12
@@ -43,7 +45,6 @@ public class AgileTestingAllianceTest extends TC_Common{
 		
 		//Print the URL every image is pointing to 
 		for(WebElement certification : certificationsList) {
-			// TODO: need to check for mouse hover over the CP-CCT icon
 			if (certification.getAttribute("title").equals("CP-CCT")) {
 				WebElement element = certification;
 				CP_CCT.add(element);
@@ -68,10 +69,9 @@ public class AgileTestingAllianceTest extends TC_Common{
 		//Take a screenshot 
 		takeSnap("before_hover");
 		
-		//Hover on CP-CCT 
-		// TODO: mouse is not working for map tag. Need to be looked upon before submitting the code
-		mouseOver(driver.findElement(By.xpath("//map/area[4]")));
-				
+		//Hover on CP-CCT
+		certificationPage.performMouseHoverOverCPCCT();
+		
 		//Take a screenshot after hovering
 		takeSnap("after_hover");
 	}

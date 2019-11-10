@@ -23,6 +23,14 @@ public class WebTableHandler {
 		log.info("WebTableHandler : " + this.driver.hashCode());
 	}
 
+	/**
+	 * This method will read the webtable data and store it in a 2D array
+	 * It store table data along with it header.
+	 * 
+	 * @param myTable - WebElement for the webtable
+	 * 
+	 * @return tableData- it is a 2D array which hold all the data stored in a webtable
+	 */
 	public String[][] getTableData(WebElement myTable) {
 
 		List<WebElement> rows_table = myTable.findElements(By.tagName(TR));

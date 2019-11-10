@@ -37,6 +37,9 @@ public class NSEIndexPage {
 	@FindBy(how=How.ID, using="main_liveany_ttg")
 	WebElement top10GainersOrLosers;
 	
+	@FindBy(how=How.ID, using="ajax_response")
+	WebElement companyResponse;
+	
 	public NSEIndexPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(this.driver, this);
@@ -61,8 +64,8 @@ public class NSEIndexPage {
 		log.info("Entering " +searchCompany+ " in the search box");
 		waitHandler.waitForElementToBeClickable(searchBox, ObjectRepository.reader.getExplicitWait());
 		handlers.enterData(searchBox, searchCompany);
+		waitHandler.waitForElementToBeClickable(companyResponse, ObjectRepository.reader.getExplicitWait());
 		handlers.performKeyOperation(searchBox, Keys.ENTER);
-		handlers.performKeyOperation(searchBox, Keys.ARROW_DOWN);
 		return new CompanyDetailsPage(driver);
 	}
 	
@@ -73,10 +76,9 @@ public class NSEIndexPage {
 	}
 	
 	public TopGainersLosersPage clickTop10GainersOrLosers() {
-		log.info("Selecting Top 10 Gainers / Losers");
+		log.info("Selecting top 10 Gainers / Losers");
 		waitHandler.waitForElementToBeVisible(top10GainersOrLosers, ObjectRepository.reader.getExplicitWait());
 		handlers.clickElement(top10GainersOrLosers);
 		return new TopGainersLosersPage(driver);
-	}
-	
+	}	
 }

@@ -15,7 +15,6 @@ import com.cpsat.challenge.pages.nseindia.NSEIndexPage;
 import com.cpsat.challenge.pages.nseindia.TopGainersLosersPage;
 import com.cpsat.challenge.testcase.common.TC_Common;
 
-import common.CommonUtility;
 import configreader.ObjectRepository;
 import configreader.PropertyFileReader;
 import excel.ExcelWriter;
@@ -42,8 +41,8 @@ public class NseIndiaShareTop10GainersAndLosers extends TC_Common {
 		// write top gainers to an excel sheet
 		ExcelWriter.exportDataToExcel("TopGainers", "GainersList", topGainersData);
 		// Assert if the percentage change is high to low for each of Top gainers
-		List<String> percentageGainChangeList = CommonUtility.getPercentageChangeData(topGainersData);
-		boolean isPercentGainSortedDesc = CommonUtility.verifyListInDecendingOrder(percentageGainChangeList);
+		List<String> percentageGainChangeList = NseUtil.getPercentageChangeData(topGainersData);
+		boolean isPercentGainSortedDesc = NseUtil.verifyListInDecendingOrder(percentageGainChangeList);
 		Assert.assertTrue(isPercentGainSortedDesc, "The percentage change for each Top gainers is not sorted in high to low");
 		
 		// Extract the date and time when top gainers data was taken from the NSE website and compare with the system time
@@ -71,8 +70,8 @@ public class NseIndiaShareTop10GainersAndLosers extends TC_Common {
 		// write top gainers to an excel sheet
 		ExcelWriter.exportDataToExcel("TopLosers", "LosersList", topLosersData);
 		// Assert if the percentage change is high to low for each of Top losers
-		List<String> percentageLossChangeList = CommonUtility.getPercentageChangeData(topLosersData);
-		boolean isPercentLossSortedDesc = CommonUtility.verifyListInDecendingOrder(percentageLossChangeList);
+		List<String> percentageLossChangeList = NseUtil.getPercentageChangeData(topLosersData);
+		boolean isPercentLossSortedDesc = NseUtil.verifyListInDecendingOrder(percentageLossChangeList);
 		Assert.assertTrue(isPercentLossSortedDesc, "The percentage change for each Top losers is not sorted in high to low");
 		
 		// Extract the date and time when top gainers data was taken from the NSE website and compare with the system time

@@ -20,30 +20,30 @@ public class DropdownHandler {
 	}
 	
 	/**
-	 * This method will select the drop down value 
-	 * @param element The webelement of the dropdown
-	 * @param value The value to be selected (visibletext) from the dropdown 
+	 * This method will select the drop down value based on the visible text
+	 * @param element - The webelement of the dropdown
+	 * @param value - the value to be selected (visibletext) from the dropdown 
 	 */
 	public void selectByVisibileText(WebElement element, String value) {
 		try{
 			new Select(element).selectByVisibleText(value);
-			log.info("The element : "+element+" is selected with value : "+value);
+			log.info("The element : " +element+ " is selected with value : " +value);
 		} catch (Exception e) {
-			log.info("The value: "+value+" could not be selected.");
+			log.info("The value: " +value+ " could not be selected from dropdown");
 		}
 	}
 
 	/**
-	 * This method will select the drop down value using id as locator
+	 * This method will select the drop down value based on the index provided
+	 * @param element - The webelement of the dropdown
 	 * @param id The id (locator) of the drop down element
-	 * @param value The value to be selected (index) from the dropdown 
 	 */
-	public void selectByIndex(WebElement element, int value) {
+	public void selectByIndex(WebElement element, int id) {
 		try{
-			new Select(element).selectByIndex(value);
-			log.info("The element with id: "+element+" is selected with index :"+value);
+			new Select(element).selectByIndex(id);
+			log.info("The element: " +element+ " is selected with index :" +id);
 		} catch (Exception e) {
-			log.info("The index: "+value+" could not be selected.");
+			log.info("The index: " +id+ " could not be selected.");
 		}
 	}
 	
@@ -55,12 +55,18 @@ public class DropdownHandler {
 	public void selectByValue(WebElement element, String value) {
 		try{
 			new Select(element).selectByValue(value);
-			log.info("The element : "+element+" is selected with value : "+value);
+			log.info("The element : " +element+ " is selected with value : " +value);
 		} catch (Exception e) {
-			log.info("The value: "+value+" could not be selected.");
+			log.info("The value: " +value+ " could not be selected.");
 		}
 	}
 	
+	/**
+	 * This method will fetch all the options from the dropdown
+	 * @param element - the WebElement of the dropdown
+	 * 
+	 * @return List<WebElement> - returns a list of weblement
+	 * */
 	public List<WebElement> getOptions(WebElement element) {
 		List<WebElement> getAllOptions = null;
 		try{

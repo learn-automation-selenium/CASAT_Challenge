@@ -20,17 +20,35 @@ public class WaitHandler {
 		log.info("Wait : " + this.driver.hashCode());
 	}
 
+	/**
+	 * This is an implicit wait where driver will for the element
+	 * 
+	 * @param timeout - it is the number for which driver object will wait
+	 * @param unit - it is the timeunit.
+	 */
 	public void setImplicitWait(long timeout, TimeUnit unit) {
 		log.info("Implicit timeout : " + timeout);
 		driver.manage().timeouts().implicitlyWait(timeout, unit == null ? TimeUnit.SECONDS : unit);
 	}
 
-	public void waitForElementToBeClickable(WebElement element, long timeOut) {
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+	/**
+	 * This is an explicit wait for which driver until webelement is clickable
+	 * @param element - webelement for which driver will wait
+	 * @param timeout - it is the number for which driver object will wait- 
+	 * 
+	 */
+	public void waitForElementToBeClickable(WebElement element, long timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, timeout);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		log.info("Webelement " +element+" found and can be clicked");
 	}
 
+	/**
+	 * This is an explicit wait for which driver until webelement is visible
+	 * @param element - webelement for which driver will wait
+	 * @param timeout - it is the number for which driver object will wait- 
+	 * 
+	 */
 	public void waitForElementToBeVisible(WebElement element, long timeout) {
 		WebDriverWait wait = new WebDriverWait(this.driver, timeout);
 		wait.until(ExpectedConditions.visibilityOf(element));

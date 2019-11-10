@@ -23,7 +23,7 @@ public class NseIndiaCompanyDetailsTest extends TC_Common{
 	}
 	
 	@Test
-	public void minNumbetTest() {
+	public void minimumNumbetTest() {
 		Map<String, Integer> marketDetails = new NSEIndexPage(driver).getMarketWatchDetails();
 		
 		Entry<String, Integer> min = null;

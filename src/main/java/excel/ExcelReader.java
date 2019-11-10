@@ -12,13 +12,22 @@ import utility.ResourceHandler;
 
 public class ExcelReader{
 
+	/**
+	 * This method reads the excel sheet to provide the data to the test cases
+	 * It store the data into an 2D array
+	 * 
+	 * @param dataFileName - name of the excel file
+	 * @param sheetName - name of the sheet
+	 * 
+	 * @return a 2D array of Object type
+	 * 
+	 */
 	public static Object[][] getAllSheetData(String dataFileName, String sheetName) {
 
 		Object[][] data = null;
 		XSSFWorkbook workbook = null;
 		InputStream fis = null;
 		try {
-			//fis = new FileInputStream(new File("./data/"+dataSheetName+".xlsx"));
 			fis = ResourceHandler.getResourcePathInputStream("\\resources\\testdata\\" +dataFileName+ ".xlsx");
 			workbook = new XSSFWorkbook(fis);
 			XSSFSheet sheet = workbook.getSheet(sheetName);	
