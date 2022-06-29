@@ -23,7 +23,7 @@
 		<extentreport.version>2.41.2</extentreport.version>
 		<assertj-core.version>3.13.2</assertj-core.version>
 		<hamcrest-all.version>1.3</hamcrest-all.version>
-		<apache-poi.version>3.17</apache-poi.version>
+		<apache-poi.version>4.1.1</apache-poi.version>
 		<apache-commons.version>1.3.2</apache-commons.version>
 		<lombok.version>1.18.4</lombok.version>
 	</properties>
